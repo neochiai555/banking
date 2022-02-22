@@ -36,10 +36,9 @@
   </properties>
 
   <modules>
-	<module>banking-rest</module>
     <module>banking-core</module>
-    <module>banking-restapi</module>
     <module>banking-core-rest</module>
     <module>banking-card-rest</module>
+    <module>banking-conteudo</module>
   </modules>
 </project>
