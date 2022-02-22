@@ -11,8 +11,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tipo_movimentacao", schema = "banking")
-public class TipoMovimentacao implements Serializable {
+@Table(name = "tipo_movimentacao_conta", schema = "banking")
+public class TipoMovimentacaoConta implements Serializable {
 
 	public static final String TIPO_DEPOSITO = "DEP";
 	public static final String TIPO_SAQUE = "SAQ";
@@ -23,8 +23,8 @@ public class TipoMovimentacao implements Serializable {
 	private static final long serialVersionUID = 987472252150115929L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "banking.seq_tipo_movimentacao")
-	@SequenceGenerator(name = "banking.seq_tipo_movimentacao", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "banking.seq_tipo_movimentacao_conta")
+	@SequenceGenerator(name = "banking.seq_tipo_movimentacao_conta", allocationSize = 1)
 	private int id;
 	
 	@Column(name = "codigo",  nullable = false)

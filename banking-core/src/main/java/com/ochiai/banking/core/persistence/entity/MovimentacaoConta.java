@@ -19,9 +19,9 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "movimentacao", schema = "banking")
+@Table(name = "movimentacao_conta", schema = "banking")
 @JsonIgnoreProperties({"conta","tipoMovimentacao"})
-public class Movimentacao implements Serializable {
+public class MovimentacaoConta implements Serializable {
 
 	/**
 	 * serialVersionUID
@@ -29,8 +29,8 @@ public class Movimentacao implements Serializable {
 	private static final long serialVersionUID = 5529346645941197666L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "banking.seq_movimentacao")
-	@SequenceGenerator(name = "banking.seq_movimentacao", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "banking.seq_movimentacao_conta")
+	@SequenceGenerator(name = "banking.seq_movimentacao_conta", allocationSize = 1)
 	private int id;
 	
 	@Column(name = "data",  nullable = false)
@@ -45,7 +45,7 @@ public class Movimentacao implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tipo")
-	private TipoMovimentacao tipoMovimentacao;	
+	private TipoMovimentacaoConta tipoMovimentacao;	
 	
 	@Transient
 	private String numeroConta;
@@ -88,11 +88,11 @@ public class Movimentacao implements Serializable {
 		this.conta = conta;
 	}
 
-	public TipoMovimentacao getTipoMovimentacao() {
+	public TipoMovimentacaoConta getTipoMovimentacao() {
 		return tipoMovimentacao;
 	}
 
-	public void setTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
+	public void setTipoMovimentacao(TipoMovimentacaoConta tipoMovimentacao) {
 		this.tipoMovimentacao = tipoMovimentacao;
 	}
 

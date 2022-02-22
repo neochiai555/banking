@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ochiai.banking.core.exception.SaldoInsuficienteException;
-import com.ochiai.banking.core.model.TransacaoModel;
-import com.ochiai.banking.core.persistence.entity.Movimentacao;
+import com.ochiai.banking.core.model.TransacaoContaModel;
+import com.ochiai.banking.core.persistence.entity.MovimentacaoConta;
 import com.ochiai.banking.core.persistence.service.AgenciaServico;
 import com.ochiai.banking.core.persistence.service.ContaServico;
-import com.ochiai.banking.core.persistence.service.MovimentacaoServico;
+import com.ochiai.banking.core.persistence.service.MovimentacaoContaServico;
 
 /**
  *
@@ -33,7 +33,7 @@ public class TransacaoFinanceiraController {
 	private ContaServico contaServico;
 	
 	@Autowired 
-	private MovimentacaoServico movimentacaoServico;
+	private MovimentacaoContaServico movimentacaoServico;
 
 	/**
 	 * Consultar movimentacoes da conta
@@ -41,7 +41,7 @@ public class TransacaoFinanceiraController {
 	 * @return movimentacoes da conta
 	 */
 	@GetMapping(value = "/extrato", produces = "application/json")
-	public @ResponseBody List<Movimentacao> extrato(@RequestParam(name = "idConta") int idConta) {
+	public @ResponseBody List<MovimentacaoConta> extrato(@RequestParam(name = "idConta") int idConta) {
 	    return movimentacaoServico.findByIdConta(idConta);
 	}	
 	
@@ -52,7 +52,7 @@ public class TransacaoFinanceiraController {
 	 * @return movimentacao resultante
 	 */
 	@PostMapping(value = "/deposito", produces = "application/json")
-	public ResponseEntity<Movimentacao> deposito(@RequestBody TransacaoModel model) {
+	public ResponseEntity<MovimentacaoConta> deposito(@RequestBody TransacaoContaModel model) {
 		try {
 			return ResponseEntity.ok(movimentacaoServico.deposito(
 				model.getData(), model.getValor(),
@@ -70,7 +70,7 @@ public class TransacaoFinanceiraController {
 	 * @return movimentacao resultante
 	 */
 	@PostMapping(value = "/saque", produces = "application/json")
-	public ResponseEntity<Movimentacao> saque(@RequestBody TransacaoModel model) {
+	public ResponseEntity<MovimentacaoConta> saque(@RequestBody TransacaoContaModel model) {
 		try {
 			return ResponseEntity.ok(movimentacaoServico.saque(
 				model.getData(), model.getValor(),

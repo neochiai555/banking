@@ -3,7 +3,7 @@ package com.ochiai.banking.core.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class TransacaoModel {
+public class TransacaoContaModel {
 	private String numeroAgencia;
 	private String digitoAgencia;
 	private String numeroConta;

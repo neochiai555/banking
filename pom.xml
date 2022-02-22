@@ -40,5 +40,6 @@
     <module>banking-core</module>
     <module>banking-restapi</module>
     <module>banking-core-rest</module>
+    <module>banking-card-rest</module>
   </modules>
 </project>

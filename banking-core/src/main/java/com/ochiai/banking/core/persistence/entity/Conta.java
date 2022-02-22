@@ -57,7 +57,7 @@ public class Conta implements Serializable {
 	private Agencia agencia;
 
 	@OneToMany(mappedBy = "conta", fetch = FetchType.LAZY)
-	private Set<Movimentacao> movimentacoes;
+	private Set<MovimentacaoConta> movimentacoes;
 	
 	@Transient
 	private String numeroAgencia;
@@ -121,11 +121,11 @@ public class Conta implements Serializable {
 		this.saldoAtual = saldoAtual;
 	}
 
-	public Set<Movimentacao> getMovimentacoes() {
+	public Set<MovimentacaoConta> getMovimentacoes() {
 		return movimentacoes;
 	}
 
-	public void setMovimentacoes(Set<Movimentacao> movimentacoes) {
+	public void setMovimentacoes(Set<MovimentacaoConta> movimentacoes) {
 		this.movimentacoes = movimentacoes;
 	}
 

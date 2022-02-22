@@ -13,27 +13,27 @@ import com.ochiai.banking.core.exception.ContaDuplicadaException;
 import com.ochiai.banking.core.exception.ContaNaoEncontradaException;
 import com.ochiai.banking.core.exception.SaldoInsuficienteException;
 import com.ochiai.banking.core.persistence.entity.Conta;
-import com.ochiai.banking.core.persistence.entity.Movimentacao;
-import com.ochiai.banking.core.persistence.entity.TipoMovimentacao;
+import com.ochiai.banking.core.persistence.entity.MovimentacaoConta;
+import com.ochiai.banking.core.persistence.entity.TipoMovimentacaoConta;
 import com.ochiai.banking.core.persistence.repository.ContaRepositorio;
-import com.ochiai.banking.core.persistence.repository.MovimentacaoRepositorio;
-import com.ochiai.banking.core.persistence.repository.MovimentacaoRepositorioCustom;
-import com.ochiai.banking.core.persistence.repository.TipoMovimentacaoRepositorio;
+import com.ochiai.banking.core.persistence.repository.MovimentacaoContaRepositorio;
+import com.ochiai.banking.core.persistence.repository.MovimentacaoContaRepositorioCustom;
+import com.ochiai.banking.core.persistence.repository.TipoMovimentacaoContaRepositorio;
 
 @Component
-public class MovimentacaoRepositorioCustomImpl implements MovimentacaoRepositorioCustom {
+public class MovimentacaoContaRepositorioCustomImpl implements MovimentacaoContaRepositorioCustom {
 	@Autowired
-	private MovimentacaoRepositorio movimentacaoRepositorio;
+	private MovimentacaoContaRepositorio movimentacaoRepositorio;
 	
 	@Autowired
 	private ContaRepositorio contaRepositorio;
 
 	@Autowired
-	private TipoMovimentacaoRepositorio tipoMovimentacaoRepositorio;
+	private TipoMovimentacaoContaRepositorio tipoMovimentacaoRepositorio;
 
 	@Override
 	@Transactional
-	public Movimentacao deposito(Date data, BigDecimal valor, String numeroAgencia, String digitoAgencia, String numeroConta, String digitoConta) throws Exception {
+	public MovimentacaoConta deposito(Date data, BigDecimal valor, String numeroAgencia, String digitoAgencia, String numeroConta, String digitoConta) throws Exception {
 		List<Conta> contas = contaRepositorio.findByNumeroDigitoAgenciaConta(numeroAgencia, digitoAgencia, numeroConta, digitoConta);
 		
 		if (contas == null || contas.isEmpty()) {
@@ -45,11 +45,11 @@ public class MovimentacaoRepositorioCustomImpl implements MovimentacaoRepositori
 		
 		Conta conta = contas.get(0);
 
-		Movimentacao movimentacao = new Movimentacao();
+		MovimentacaoConta movimentacao = new MovimentacaoConta();
 		movimentacao.setConta(conta);
 		movimentacao.setData(data);
 		movimentacao.setValor(valor);
-		movimentacao.setTipoMovimentacao(tipoMovimentacaoRepositorio.findByCodigo(TipoMovimentacao.TIPO_DEPOSITO).orElse(null));
+		movimentacao.setTipoMovimentacao(tipoMovimentacaoRepositorio.findByCodigo(TipoMovimentacaoConta.TIPO_DEPOSITO).orElse(null));
 		
 		movimentacaoRepositorio.save(movimentacao);
 
@@ -61,7 +61,7 @@ public class MovimentacaoRepositorioCustomImpl implements MovimentacaoRepositori
 
 	@Override
 	@Transactional
-	public Movimentacao saque(Date data, BigDecimal valor, String numeroAgencia, String digitoAgencia, String numeroConta, String digitoConta) throws SaldoInsuficienteException, ContaDuplicadaException, ContaNaoEncontradaException {
+	public MovimentacaoConta saque(Date data, BigDecimal valor, String numeroAgencia, String digitoAgencia, String numeroConta, String digitoConta) throws SaldoInsuficienteException, ContaDuplicadaException, ContaNaoEncontradaException {
 		List<Conta> contas = contaRepositorio.findByNumeroDigitoAgenciaConta(numeroAgencia, digitoAgencia, numeroConta, digitoConta);
 		
 		if (contas == null || contas.isEmpty()) {
@@ -77,11 +77,11 @@ public class MovimentacaoRepositorioCustomImpl implements MovimentacaoRepositori
 			throw new SaldoInsuficienteException("Saldo insuficiente");
 		}
 		
-		Movimentacao movimentacao = new Movimentacao();
+		MovimentacaoConta movimentacao = new MovimentacaoConta();
 		movimentacao.setConta(conta);
 		movimentacao.setData(data);
 		movimentacao.setValor(valor);
-		movimentacao.setTipoMovimentacao(tipoMovimentacaoRepositorio.findByCodigo(TipoMovimentacao.TIPO_SAQUE).orElse(null));
+		movimentacao.setTipoMovimentacao(tipoMovimentacaoRepositorio.findByCodigo(TipoMovimentacaoConta.TIPO_SAQUE).orElse(null));
 		
 		movimentacaoRepositorio.save(movimentacao);
 
