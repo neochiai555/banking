@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.ochiai.banking</groupId>
+  <artifactId>banking</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>banking</name>
+  <description>banking</description>
+  <inceptionYear>2022</inceptionYear>
+  <url>https://github.com/neochiai555/banking</url>
+
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License (LGPL) version 3.0</name>
+      <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+  </developers>
+
+  <scm>
+    <url>https://github.com/neochiai555/banking/tree/master</url>
+    <connection>scm:git:git://github.com:neochiai555/banking.git</connection>
+    <developerConnection>scm:git:ssh://github.com:neochiai555/banking.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <properties>
+    <license.licenseName>lgpl_v3</license.licenseName>
+
+    <sonar.projectKey>banking</sonar.projectKey>
+  </properties>
+
+  <modules>
+	<module>banking-rest</module>
+    <module>banking-core</module>
+    <module>banking-restapi</module>
+    <module>banking-core-rest</module>
+  </modules>
+</project>
