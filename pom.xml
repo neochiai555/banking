@@ -40,5 +40,6 @@
     <module>banking-core-rest</module>
     <module>banking-card-rest</module>
     <module>banking-conteudo</module>
+    <module>banking-mensageria</module>
   </modules>
 </project>
