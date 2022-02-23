@@ -11,8 +11,4 @@ public interface MensageriaServico {
 	String GRUPO_INVOCACAO_TRANSACAO_CONTA = "banking_account_transaction_invocation_group";
 	String GRUPO_RETORNO_TRANSACAO_CONTA = "banking_account_transaction_return_group";
 
-	void enviar(String topico, String chave, String mensagem);
-
-	void receber(String mensagem);
-
 }

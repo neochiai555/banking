@@ -37,6 +37,12 @@
 			<artifactId>spring-kafka-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+		    <groupId>com.ochiai.banking</groupId>
+		    <version>0.0.1-SNAPSHOT</version>
+		  	<artifactId>banking-core</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
