@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
+import com.ochiai.banking.mensageria.model.TransacaoCartao;
 import com.ochiai.banking.mensageria.model.TransacaoConta;
 
 @Service
@@ -26,7 +27,7 @@ public abstract class MensageriaServicoContaImpl implements MensageriaServico {
 
 	protected abstract void enviar(String topico, String chave, TransacaoConta transacao);
 	
-	protected abstract void receber(TransacaoConta transacao);
+	protected abstract void receber(TransacaoCartao transacao);
 	
 	protected void enviar(String topico, String chave, TransacaoConta transacao, TratamentoRetornoMensagemConta callback) {
         

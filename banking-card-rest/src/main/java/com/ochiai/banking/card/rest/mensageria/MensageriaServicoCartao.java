@@ -4,26 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import com.ochiai.banking.core.persistence.service.MovimentacaoContaServico;
-import com.ochiai.banking.mensageria.model.TransacaoConta;
+import com.ochiai.banking.core.persistence.service.MovimentacaoCartaoServico;
+import com.ochiai.banking.mensageria.model.TransacaoCartao;
 import com.ochiai.banking.mensageria.service.MensageriaServicoCartaoImpl;
 
 @Service
 public class MensageriaServicoCartao extends MensageriaServicoCartaoImpl {
 	
 	@Autowired 
-	MovimentacaoContaServico movimentacaoContaServico;
+	MovimentacaoCartaoServico movimentacaoCartaoServico;
 	
-	public void enviar(TransacaoConta transacao) {
-		enviar(TOPICO_INVOCACAO_TRANSACAO_CONTA, transacao.getIdentificadorConta(), transacao);
+	public void enviar(TransacaoCartao transacao) {
+		enviar(TOPICO_INVOCACAO_TRANSACAO_CARTAO, transacao.getIdentificadorCartao(), transacao);
 	}
 
 	@Override
-	protected void enviar(String topico, String chave, TransacaoConta transacao) {
-		enviar(topico, chave, transacao, new TratamentoRetornoMensagemConta() {
+	protected void enviar(String topico, String chave, TransacaoCartao transacao) {
+		enviar(topico, chave, transacao, new TratamentoRetornoMensagemCartao() {
 			
 			@Override
-			public void sucesso(TransacaoConta transacao) {
+			public void sucesso(TransacaoCartao transacao) {
 				System.out.println("Mensagem de transacao enviada com sucesso: " + transacao.toString());
 			}
 			
@@ -35,16 +35,13 @@ public class MensageriaServicoCartao extends MensageriaServicoCartaoImpl {
 	}
 
 	@Override
-	@KafkaListener(topics = TOPICO_RETORNO_TRANSACAO_CONTA, groupId = GRUPO_RETORNO_TRANSACAO_CONTA)
-	protected void receber(TransacaoConta transacao) {
+	@KafkaListener(topics = TOPICO_RETORNO_TRANSACAO_CARTAO, groupId = GRUPO_RETORNO_TRANSACAO_CARTAO)
+	protected void receber(TransacaoCartao transacao) {
 		if (transacao.getSucesso()) {
 			System.out.println("Transacao de conta completada: " + transacao.toString());
 		} else {
 			try {
-				movimentacaoContaServico.deposito(transacao.getData(), transacao.getValor(),
-						transacao.getNumeroAgencia(), transacao.getDigitoAgencia(),
-						transacao.getNumeroConta(), transacao.getDigitoConta()
-						);
+				movimentacaoCartaoServico.estorno(transacao.getData(), transacao.getValor(), transacao.getNumeroCartao());
 			} catch (Exception ex) {
 				System.out.println("Erro na transacao de conta: " + ex.getMessage());
 			}

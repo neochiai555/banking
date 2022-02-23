@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "cartao", schema = "banking")
-@JsonIgnoreProperties({"tipoCartao"})
+@JsonIgnoreProperties({"tipoCartao","conta"})
 public class Cartao implements Serializable {
 
 	/**
@@ -48,10 +48,17 @@ public class Cartao implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tipo")
 	private TipoCartao tipoCartao;	
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_conta")
+	private Conta conta;	
 	
 	@Transient
 	private String codigoTipoCartao;
 
+	@Transient
+	private String numeroConta;
+	
 	public int getId() {
 		return id;
 	}
@@ -96,6 +103,14 @@ public class Cartao implements Serializable {
 		return tipoCartao;
 	}
 
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
+	}
+
 	public void setTipoCartao(TipoCartao tipoCartao) {
 		this.tipoCartao = tipoCartao;
 	}
@@ -103,5 +118,8 @@ public class Cartao implements Serializable {
 	public String getCodigoTipoCartao() {
 		return tipoCartao.getCodigo();
 	}
-	
+
+	public String getNumeroConta() {
+		return conta.getNumeroAgencia() + "-" + conta.getDigitoAgencia() + " " + conta.getNumero() + "-" + conta.getDigito();
+	}
 }
