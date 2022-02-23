@@ -37,7 +37,7 @@ public class MensageriaServicoCartao extends MensageriaServicoCartaoImpl {
 	@Override
 	@KafkaListener(topics = TOPICO_RETORNO_TRANSACAO_CARTAO, groupId = GRUPO_RETORNO_TRANSACAO_CARTAO)
 	protected void receber(TransacaoCartao transacao) {
-		if (transacao.getSucesso()) {
+		if (transacao.getProcessada()) {
 			System.out.println("Transacao de conta completada: " + transacao.toString());
 		} else {
 			try {

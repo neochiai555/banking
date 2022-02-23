@@ -11,7 +11,7 @@ public class TransacaoCartao {
 	private BigDecimal valor;
 	private String descricao;
 	
-	private Boolean sucesso;
+	private Boolean processada;
 	private String retorno;
 	
 	public String getNumeroCartao() {
@@ -47,11 +47,11 @@ public class TransacaoCartao {
 	public String getIdentificadorCartao() {
 		return numeroCartao;
 	}
-	public Boolean getSucesso() {
-		return sucesso;
+	public Boolean getProcessada() {
+		return processada;
 	}
-	public void setSucesso(Boolean sucesso) {
-		this.sucesso = sucesso;
+	public void setProcessada(Boolean processada) {
+		this.processada = processada;
 	}
 	public String getRetorno() {
 		return retorno;

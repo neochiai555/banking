@@ -14,10 +14,10 @@ import com.ochiai.banking.mensageria.model.TransacaoConta;
 public abstract class MensageriaServicoContaImpl implements MensageriaServico {
 	
 	@Autowired
-	protected KafkaTemplate<String, TransacaoConta> kafkaTemplateConta;
+	protected KafkaTemplate<String, TransacaoCartao> kafkaTemplateCartao;
 	
-	public interface TratamentoRetornoMensagemConta {
-		void sucesso(TransacaoConta transacao);
+	public interface TratamentoRetornoMensagemCartao {
+		void sucesso(TransacaoCartao transacao);
 		void erro(Throwable t);		
 	}
 
@@ -25,19 +25,19 @@ public abstract class MensageriaServicoContaImpl implements MensageriaServico {
 		
 	}
 
-	protected abstract void enviar(String topico, String chave, TransacaoConta transacao);
+	protected abstract void enviar(String topico, String chave, TransacaoCartao transacao);
 	
 	protected abstract void receber(TransacaoCartao transacao);
 	
-	protected void enviar(String topico, String chave, TransacaoConta transacao, TratamentoRetornoMensagemConta callback) {
+	protected void enviar(String topico, String chave, TransacaoCartao transacao, TratamentoRetornoMensagemCartao callback) {
         
-	    ListenableFuture<SendResult<String, TransacaoConta>> future = 
-	    		kafkaTemplateConta.send(topico, chave, transacao);
+	    ListenableFuture<SendResult<String, TransacaoCartao>> future = 
+	    		kafkaTemplateCartao.send(topico, chave, transacao);
 		
-	    future.addCallback(new ListenableFutureCallback<SendResult<String, TransacaoConta>>() {
+	    future.addCallback(new ListenableFutureCallback<SendResult<String, TransacaoCartao>>() {
 
 	        @Override
-	        public void onSuccess(SendResult<String, TransacaoConta> result) {
+	        public void onSuccess(SendResult<String, TransacaoCartao> result) {
 	            System.out.println("Sent message=[" + transacao.toString() + 
 	              "] with offset=[" + result.getRecordMetadata().offset() + "]");
 	            

@@ -11,7 +11,6 @@ import com.ochiai.banking.core.persistence.entity.Conta;
 import com.ochiai.banking.core.persistence.service.CartaoServico;
 import com.ochiai.banking.core.persistence.service.MovimentacaoContaServico;
 import com.ochiai.banking.mensageria.model.TransacaoCartao;
-import com.ochiai.banking.mensageria.model.TransacaoConta;
 import com.ochiai.banking.mensageria.service.MensageriaServicoContaImpl;
 
 @Service
@@ -23,13 +22,24 @@ public class MensageriaServicoConta extends MensageriaServicoContaImpl {
 	@Autowired 
 	CartaoServico cartaoServico;
 
-	public void enviar(TransacaoConta transacao) {
-		// Por hora nada, este e o fim da cadeia de eventos
+	public void enviar(TransacaoCartao transacao) {
+		enviar(TOPICO_RETORNO_TRANSACAO_CARTAO, transacao.getIdentificadorCartao(), transacao);
 	}
-	
+
 	@Override
-	protected void enviar(String topico, String chave, TransacaoConta transacao) {
-		// Por hora nada, este e o fim da cadeia de eventos
+	protected void enviar(String topico, String chave, TransacaoCartao transacao) {
+		enviar(topico, chave, transacao, new TratamentoRetornoMensagemCartao() {
+			
+			@Override
+			public void sucesso(TransacaoCartao transacao) {
+				System.out.println("Mensagem de transacao enviada com sucesso: " + transacao.toString());
+			}
+			
+			@Override
+			public void erro(Throwable t) {
+				System.out.println("Erro no envio de transacao: " + t.getMessage());
+			}
+		});
 	}
 
 	@Override
@@ -56,6 +66,9 @@ public class MensageriaServicoConta extends MensageriaServicoContaImpl {
 				conta.getNumeroAgencia(), conta.getDigitoAgencia(),
 				conta.getNumero(), conta.getDigito()
 				);
+			
+			transacao.setProcessada(true);
+			enviar(transacao);
 		} catch (Exception ex) {
 			System.out.println("Erro na transacao de saque na conta: " + ex.getMessage());
 		}
