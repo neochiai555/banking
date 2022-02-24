@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ochiai.banking.card.rest.mensageria.MensageriaServicoCartao;
 import com.ochiai.banking.core.model.TransacaoCartaoModel;
 import com.ochiai.banking.core.persistence.entity.MovimentacaoCartao;
 import com.ochiai.banking.core.persistence.service.CartaoServico;
 import com.ochiai.banking.core.persistence.service.MovimentacaoCartaoServico;
+import com.ochiai.banking.mensageria.model.TransacaoCartao;
 
 /**
  *
@@ -26,6 +28,9 @@ import com.ochiai.banking.core.persistence.service.MovimentacaoCartaoServico;
 public class TransacaoFinanceiraController {
 	@Autowired
 	private CartaoServico cartaoServico;
+	
+	@Autowired
+	private MensageriaServicoCartao mensageriaServicoCartao;
 	
 	@Autowired 
 	private MovimentacaoCartaoServico movimentacaoCartaoServico;
@@ -48,10 +53,20 @@ public class TransacaoFinanceiraController {
 	@PostMapping(value = "/pagamento", produces = "application/json")
 	public ResponseEntity<MovimentacaoCartao> pagamento(@RequestBody TransacaoCartaoModel model) {
 		try {
-			return ResponseEntity.ok(movimentacaoCartaoServico.pagamento(
+			ResponseEntity<MovimentacaoCartao> entity = ResponseEntity.ok(movimentacaoCartaoServico.pagamento(
 					model.getData(), 
 					model.getValor(), 
 					model.getNumeroCartao()));
+			
+			TransacaoCartao transacao = new TransacaoCartao();
+			transacao.setData(model.getData());
+			transacao.setValor(model.getValor());
+			transacao.setTipo(model.getTipo());
+			transacao.setNumeroCartao(model.getNumeroCartao());
+			
+			mensageriaServicoCartao.enviar(transacao);
+			
+			return entity;
 		} catch (Exception ex) {
 			return ResponseEntity.internalServerError().build();
 		}

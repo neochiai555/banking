@@ -14,9 +14,9 @@ import com.ochiai.banking.core.persistence.entity.Cartao;
 @Repository
 public interface CartaoRepositorio extends JpaRepository<Cartao, Integer>, JpaSpecificationExecutor<Cartao>, PagingAndSortingRepository<Cartao, Integer> {
 	
-	@Query("select c from Cartao c left join fetch c.conta conta where c.id = ?1")
+	@Query("select c from Cartao c left join fetch c.conta conta left join fetch conta.agencia where c.id = ?1")
 	Optional<Cartao> findById(Integer id);
 
-	@Query("select c from Cartao c left join fetch c.conta where c.numero = ?1")
+	@Query("select c from Cartao c left join fetch c.conta conta left join fetch conta.agencia where c.numero = ?1")
 	List<Cartao> findByNumero(String numeroCartao);
 }

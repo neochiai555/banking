@@ -43,7 +43,8 @@ public class MensageriaServicoConta extends MensageriaServicoContaImpl {
 	}
 
 	@Override
-	@KafkaListener(topics = TOPICO_INVOCACAO_TRANSACAO_CARTAO, groupId = TOPICO_INVOCACAO_TRANSACAO_CARTAO)
+	@KafkaListener(topics = TOPICO_INVOCACAO_TRANSACAO_CARTAO, groupId = TOPICO_INVOCACAO_TRANSACAO_CARTAO,
+			containerFactory = "transacaoCartaoKafkaListenerContainerFactory")
 	protected void receber(TransacaoCartao transacao) {
 		try {
 			List<Cartao> cartoes = cartaoServico.findByNumeroCartao(transacao.getNumeroCartao());
@@ -67,9 +68,11 @@ public class MensageriaServicoConta extends MensageriaServicoContaImpl {
 				conta.getNumero(), conta.getDigito()
 				);
 			
-			transacao.setProcessada(true);
+			transacao.setProcessada(false);
 			enviar(transacao);
 		} catch (Exception ex) {
+			transacao.setProcessada(false);
+			enviar(transacao);
 			System.out.println("Erro na transacao de saque na conta: " + ex.getMessage());
 		}
 	}

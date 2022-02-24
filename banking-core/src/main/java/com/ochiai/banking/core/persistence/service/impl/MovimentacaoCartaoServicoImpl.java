@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,14 +30,17 @@ public class MovimentacaoCartaoServicoImpl implements MovimentacaoCartaoServico 
 		return movimentacaoCartaoRepositorio.findByNumeroCartao(numeroCartao);
 	}
 	
+	@Transactional
 	public MovimentacaoCartao pagamento(Date data, BigDecimal valor, String numeroCartao) throws Exception {
 		return movimentacaoCartaoRepositorioCustom.pagamento(data, valor, numeroCartao);
 	}
 	
+	@Transactional
 	public MovimentacaoCartao compra(Date data, BigDecimal valor, String numeroCartao) throws Exception {
 		return movimentacaoCartaoRepositorioCustom.compra(data, valor, numeroCartao);	
 	}
 	
+	@Transactional
 	public MovimentacaoCartao estorno(Date data, BigDecimal valor, String numeroCartao) throws Exception {
 		return movimentacaoCartaoRepositorioCustom.estorno(data, valor, numeroCartao);	
 	}

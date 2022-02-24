@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "movimentacao_cartao", schema = "banking")
-@JsonIgnoreProperties({"cartao","tipoMovimentacao"})
+@JsonIgnoreProperties({"cartao","tipoMovimentacaoCartao"})
 public class MovimentacaoCartao implements Serializable {
 
 	/**
@@ -39,7 +39,7 @@ public class MovimentacaoCartao implements Serializable {
 	@Column(name = "valor",  nullable = false)
 	private BigDecimal valor;
 
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Conta.class)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Cartao.class)
 	@JoinColumn(name = "id_cartao")
 	private Cartao cartao;
 	
