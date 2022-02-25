@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 
 import com.ochiai.banking.core.persistence.service.MovimentacaoCartaoServico;
 import com.ochiai.banking.mensageria.model.TransacaoCartao;
-import com.ochiai.banking.mensageria.service.MensageriaServicoCartaoImpl;
+import com.ochiai.banking.mensageria.service.MensageriaServicoCartaoBase;
 
 @Service
-public class MensageriaServicoCartao extends MensageriaServicoCartaoImpl {
+public class MensageriaServicoCartao extends MensageriaServicoCartaoBase {
 	
 	@Autowired 
 	MovimentacaoCartaoServico movimentacaoCartaoServico;

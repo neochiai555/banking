@@ -11,10 +11,10 @@ import com.ochiai.banking.core.persistence.entity.Conta;
 import com.ochiai.banking.core.persistence.service.CartaoServico;
 import com.ochiai.banking.core.persistence.service.MovimentacaoContaServico;
 import com.ochiai.banking.mensageria.model.TransacaoCartao;
-import com.ochiai.banking.mensageria.service.MensageriaServicoContaImpl;
+import com.ochiai.banking.mensageria.service.MensageriaServicoContaBase;
 
 @Service
-public class MensageriaServicoConta extends MensageriaServicoContaImpl {
+public class MensageriaServicoConta extends MensageriaServicoContaBase {
 	
 	@Autowired 
 	MovimentacaoContaServico movimentacaoContaServico;

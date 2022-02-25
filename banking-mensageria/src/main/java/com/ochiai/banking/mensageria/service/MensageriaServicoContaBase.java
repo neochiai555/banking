@@ -11,7 +11,7 @@ import com.ochiai.banking.mensageria.model.TransacaoCartao;
 import com.ochiai.banking.mensageria.model.TransacaoConta;
 
 @Service
-public abstract class MensageriaServicoContaImpl implements MensageriaServico {
+public abstract class MensageriaServicoContaBase implements MensageriaServico {
 	
 	@Autowired
 	protected KafkaTemplate<String, TransacaoCartao> kafkaTemplateCartao;
@@ -21,7 +21,7 @@ public abstract class MensageriaServicoContaImpl implements MensageriaServico {
 		void erro(Throwable t);		
 	}
 
-	public MensageriaServicoContaImpl() {
+	public MensageriaServicoContaBase() {
 		
 	}
 
@@ -29,7 +29,7 @@ public abstract class MensageriaServicoContaImpl implements MensageriaServico {
 	
 	protected abstract void receber(TransacaoCartao transacao);
 	
-	protected void enviar(String topico, String chave, TransacaoCartao transacao, TratamentoRetornoMensagemCartao callback) {
+	protected final void enviar(String topico, String chave, TransacaoCartao transacao, TratamentoRetornoMensagemCartao callback) {
         
 	    ListenableFuture<SendResult<String, TransacaoCartao>> future = 
 	    		kafkaTemplateCartao.send(topico, chave, transacao);

@@ -10,7 +10,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 import com.ochiai.banking.mensageria.model.TransacaoCartao;
 
 @Service
-public abstract class MensageriaServicoCartaoImpl implements MensageriaServico {
+public abstract class MensageriaServicoCartaoBase implements MensageriaServico {
 	
 	@Autowired
 	protected KafkaTemplate<String, TransacaoCartao> kafkaTemplateCartao;
@@ -20,7 +20,7 @@ public abstract class MensageriaServicoCartaoImpl implements MensageriaServico {
 		void erro(Throwable t);		
 	}
 
-	public MensageriaServicoCartaoImpl() {
+	public MensageriaServicoCartaoBase() {
 		
 	}
 
@@ -28,7 +28,7 @@ public abstract class MensageriaServicoCartaoImpl implements MensageriaServico {
 	
 	protected abstract void receber(TransacaoCartao transacao);
 	
-	protected void enviar(String topico, String chave, TransacaoCartao transacao, TratamentoRetornoMensagemCartao callback) {
+	protected final void enviar(String topico, String chave, TransacaoCartao transacao, TratamentoRetornoMensagemCartao callback) {
         
 	    ListenableFuture<SendResult<String, TransacaoCartao>> future = 
 	    		kafkaTemplateCartao.send(topico, chave, transacao);
