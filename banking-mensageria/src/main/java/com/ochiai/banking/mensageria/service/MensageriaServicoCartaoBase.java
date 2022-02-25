@@ -1,5 +1,7 @@
 package com.ochiai.banking.mensageria.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -11,6 +13,7 @@ import com.ochiai.banking.mensageria.model.TransacaoCartao;
 
 @Service
 public abstract class MensageriaServicoCartaoBase implements MensageriaServico {
+	Logger logger = LoggerFactory.getLogger(MensageriaServicoCartaoBase.class);
 	
 	@Autowired
 	protected KafkaTemplate<String, TransacaoCartao> kafkaTemplateCartao;
@@ -37,14 +40,14 @@ public abstract class MensageriaServicoCartaoBase implements MensageriaServico {
 
 	        @Override
 	        public void onSuccess(SendResult<String, TransacaoCartao> result) {
-	            System.out.println("Sent message=[" + transacao.toString() + 
+	            logger.info("Sent message=[" + transacao.toString() + 
 	              "] with offset=[" + result.getRecordMetadata().offset() + "]");
 	            
 	            callback.sucesso(transacao);
 	        }
 	        @Override
 	        public void onFailure(Throwable ex) {
-	            System.out.println("Unable to send message=[" 
+	            logger.error("Unable to send message=[" 
 	              + transacao.toString() + "] due to : " + ex.getMessage());
 	            
 	            callback.erro(ex);

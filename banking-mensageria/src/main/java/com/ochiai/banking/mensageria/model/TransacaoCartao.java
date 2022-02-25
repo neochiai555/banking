@@ -3,7 +3,7 @@ package com.ochiai.banking.mensageria.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class TransacaoCartao {
+public class TransacaoCartao extends Transacao {
 	private String numeroCartao;
 	
 	private String tipo;
@@ -14,6 +14,10 @@ public class TransacaoCartao {
 	private Boolean processada;
 	private String retorno;
 	
+	public TransacaoCartao() {	
+		super();
+	}
+
 	public String getNumeroCartao() {
 		return numeroCartao;
 	}
@@ -60,4 +64,20 @@ public class TransacaoCartao {
 		this.retorno = retorno;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{")
+			.append("uuid:").append(uuid)
+			.append("numeroCartao:").append(numeroCartao)
+			.append("tipo:").append(tipo)
+			.append("data:").append(data)
+			.append("valor:").append(valor)
+			.append("descricao:").append(descricao)
+			.append("processada:").append(processada)
+			.append("retorno:").append(retorno)
+			.append("}");
+		
+		return sb.toString();
+	}
 }

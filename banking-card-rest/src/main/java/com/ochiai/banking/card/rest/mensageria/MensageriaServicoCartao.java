@@ -1,5 +1,7 @@
 package com.ochiai.banking.card.rest.mensageria;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import com.ochiai.banking.mensageria.service.MensageriaServicoCartaoBase;
 
 @Service
 public class MensageriaServicoCartao extends MensageriaServicoCartaoBase {
+	Logger logger = LoggerFactory.getLogger(MensageriaServicoCartao.class);
 	
 	@Autowired 
 	MovimentacaoCartaoServico movimentacaoCartaoServico;
@@ -24,12 +27,12 @@ public class MensageriaServicoCartao extends MensageriaServicoCartaoBase {
 			
 			@Override
 			public void sucesso(TransacaoCartao transacao) {
-				System.out.println("Mensagem de transacao enviada com sucesso: " + transacao.toString());
+				logger.info("Mensagem de transacao enviada com sucesso: " + transacao.toString());
 			}
 			
 			@Override
 			public void erro(Throwable t) {
-				System.out.println("Erro no envio de transacao: " + t.getMessage());
+				logger.error("Erro no envio de transacao: " + t.getMessage());
 			}
 		});
 	}
@@ -39,12 +42,12 @@ public class MensageriaServicoCartao extends MensageriaServicoCartaoBase {
 			containerFactory = "transacaoCartaoKafkaListenerContainerFactory")
 	protected void receber(TransacaoCartao transacao) {
 		if (transacao.getProcessada()) {
-			System.out.println("Transacao de conta completada: " + transacao.toString());
+			logger.info("Transacao de conta completada: " + transacao.toString());
 		} else {
 			try {
 				movimentacaoCartaoServico.estorno(transacao.getData(), transacao.getValor(), transacao.getNumeroCartao());
 			} catch (Exception ex) {
-				System.out.println("Erro na transacao de conta: " + ex.getMessage());
+				logger.error("Erro na transacao de conta: " + ex.getMessage());
 			}
 		}
 	}

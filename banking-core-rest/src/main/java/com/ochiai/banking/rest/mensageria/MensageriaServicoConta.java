@@ -2,6 +2,8 @@ package com.ochiai.banking.rest.mensageria;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import com.ochiai.banking.mensageria.service.MensageriaServicoContaBase;
 
 @Service
 public class MensageriaServicoConta extends MensageriaServicoContaBase {
+	Logger logger = LoggerFactory.getLogger(MensageriaServicoConta.class);
 	
 	@Autowired 
 	MovimentacaoContaServico movimentacaoContaServico;
@@ -32,12 +35,12 @@ public class MensageriaServicoConta extends MensageriaServicoContaBase {
 			
 			@Override
 			public void sucesso(TransacaoCartao transacao) {
-				System.out.println("Mensagem de transacao enviada com sucesso: " + transacao.toString());
+				logger.info("Mensagem de transacao enviada com sucesso: " + transacao.toString());
 			}
 			
 			@Override
 			public void erro(Throwable t) {
-				System.out.println("Erro no envio de transacao: " + t.getMessage());
+				logger.error("Erro no envio de transacao: " + t.getMessage());
 			}
 		});
 	}
@@ -50,12 +53,12 @@ public class MensageriaServicoConta extends MensageriaServicoContaBase {
 			List<Cartao> cartoes = cartaoServico.findByNumeroCartao(transacao.getNumeroCartao());
 			
 			if (cartoes == null || cartoes.isEmpty()) {
-				System.out.println("Cartao nao encontrado: " + transacao.getNumeroCartao());	
+				logger.error("Cartao nao encontrado: " + transacao.getNumeroCartao());	
 				return;
 			}
 
 			if (cartoes.size() > 1) {
-				System.out.println("Cartao duplicado: " + transacao.getNumeroCartao());	
+				logger.error("Cartao duplicado: " + transacao.getNumeroCartao());	
 				return;
 			}
 
@@ -68,12 +71,12 @@ public class MensageriaServicoConta extends MensageriaServicoContaBase {
 				conta.getNumero(), conta.getDigito()
 				);
 			
-			transacao.setProcessada(false);
+			transacao.setProcessada(true);
 			enviar(transacao);
 		} catch (Exception ex) {
 			transacao.setProcessada(false);
 			enviar(transacao);
-			System.out.println("Erro na transacao de saque na conta: " + ex.getMessage());
+			logger.error("Erro na transacao de saque na conta: " + ex.getMessage());
 		}
 	}
 }
