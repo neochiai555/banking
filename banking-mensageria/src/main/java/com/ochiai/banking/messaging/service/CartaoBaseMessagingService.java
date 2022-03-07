@@ -1,4 +1,4 @@
-package com.ochiai.banking.mensageria.service;
+package com.ochiai.banking.messaging.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
-import com.ochiai.banking.mensageria.model.TransacaoCartao;
+import com.ochiai.banking.messaging.model.TransacaoCartao;
 
 @Service
-public abstract class MensageriaServicoCartaoBase implements MensageriaServico {
-	Logger logger = LoggerFactory.getLogger(MensageriaServicoCartaoBase.class);
+public abstract class CartaoBaseMessagingService implements MessagingService {
+	Logger logger = LoggerFactory.getLogger(CartaoBaseMessagingService.class);
 	
 	@Autowired
 	protected KafkaTemplate<String, TransacaoCartao> kafkaTemplateCartao;
@@ -23,7 +23,7 @@ public abstract class MensageriaServicoCartaoBase implements MensageriaServico {
 		void erro(Throwable t);		
 	}
 
-	public MensageriaServicoCartaoBase() {
+	public CartaoBaseMessagingService() {
 		
 	}
 

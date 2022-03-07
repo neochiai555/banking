@@ -1,4 +1,4 @@
-package com.ochiai.banking.mensageria.configuration;
+package com.ochiai.banking.messaging.configuration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
-import com.ochiai.banking.mensageria.model.TransacaoCartao;
+import com.ochiai.banking.messaging.model.TransacaoCartao;
 
 @EnableKafka
 @Configuration

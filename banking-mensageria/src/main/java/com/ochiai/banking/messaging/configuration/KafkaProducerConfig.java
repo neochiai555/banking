@@ -1,4 +1,4 @@
-package com.ochiai.banking.mensageria.configuration;
+package com.ochiai.banking.messaging.configuration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,8 +13,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import com.ochiai.banking.mensageria.model.TransacaoCartao;
-import com.ochiai.banking.mensageria.model.TransacaoConta;
+import com.ochiai.banking.messaging.model.TransacaoCartao;
+import com.ochiai.banking.messaging.model.TransacaoConta;
 
 @Configuration
 public class KafkaProducerConfig {

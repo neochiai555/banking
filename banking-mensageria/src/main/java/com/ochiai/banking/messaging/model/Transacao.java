@@ -1,4 +1,4 @@
-package com.ochiai.banking.mensageria.model;
+package com.ochiai.banking.messaging.model;
 
 import java.util.UUID;
 

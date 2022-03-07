@@ -1,4 +1,4 @@
-package com.ochiai.banking.mensageria.configuration;
+package com.ochiai.banking.messaging.configuration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.KafkaAdmin;
 
-import com.ochiai.banking.mensageria.service.MensageriaServico;
+import com.ochiai.banking.messaging.service.MessagingService;
 
 @Configuration
 public class KafkaTopicConfig {
@@ -27,21 +27,21 @@ public class KafkaTopicConfig {
     
     @Bean
     public NewTopic topicCardTransactionInvocation() {
-         return new NewTopic(MensageriaServico.TOPICO_INVOCACAO_TRANSACAO_CARTAO, 1, (short) 1);
+         return new NewTopic(MessagingService.TOPICO_INVOCACAO_TRANSACAO_CARTAO, 1, (short) 1);
     }
     
     @Bean
     public NewTopic topicCardTransactionReturn() {
-         return new NewTopic(MensageriaServico.TOPICO_RETORNO_TRANSACAO_CARTAO, 1, (short) 1);
+         return new NewTopic(MessagingService.TOPICO_RETORNO_TRANSACAO_CARTAO, 1, (short) 1);
     }
 
     @Bean
     public NewTopic topicAccountTransactionInvocation() {
-         return new NewTopic(MensageriaServico.TOPICO_INVOCACAO_TRANSACAO_CONTA, 1, (short) 1);
+         return new NewTopic(MessagingService.TOPICO_INVOCACAO_TRANSACAO_CONTA, 1, (short) 1);
     }
     
     @Bean
     public NewTopic topicAccountTransactionReturn() {
-         return new NewTopic(MensageriaServico.TOPICO_RETORNO_TRANSACAO_CONTA, 1, (short) 1);
+         return new NewTopic(MessagingService.TOPICO_RETORNO_TRANSACAO_CONTA, 1, (short) 1);
     }
 }

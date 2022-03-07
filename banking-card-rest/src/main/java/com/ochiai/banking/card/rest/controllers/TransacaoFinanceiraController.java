@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ochiai.banking.card.rest.mensageria.MensageriaServicoCartao;
+import com.ochiai.banking.card.rest.messaging.CartaoMessagingService;
 import com.ochiai.banking.core.model.TransacaoCartaoModel;
 import com.ochiai.banking.core.persistence.entity.MovimentacaoCartao;
 import com.ochiai.banking.core.persistence.service.CartaoServico;
 import com.ochiai.banking.core.persistence.service.MovimentacaoCartaoServico;
-import com.ochiai.banking.mensageria.model.TransacaoCartao;
+import com.ochiai.banking.messaging.model.TransacaoCartao;
 
 /**
  *
@@ -30,7 +30,7 @@ public class TransacaoFinanceiraController {
 	private CartaoServico cartaoServico;
 	
 	@Autowired
-	private MensageriaServicoCartao mensageriaServicoCartao;
+	private CartaoMessagingService cartaoMessagingService;
 	
 	@Autowired 
 	private MovimentacaoCartaoServico movimentacaoCartaoServico;
@@ -64,7 +64,7 @@ public class TransacaoFinanceiraController {
 			transacao.setTipo(model.getTipo());
 			transacao.setNumeroCartao(model.getNumeroCartao());
 			
-			mensageriaServicoCartao.enviar(transacao);
+			cartaoMessagingService.enviar(transacao);
 			
 			return entity;
 		} catch (Exception ex) {

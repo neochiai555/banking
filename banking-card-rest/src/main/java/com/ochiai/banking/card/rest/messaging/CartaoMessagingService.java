@@ -1,4 +1,4 @@
-package com.ochiai.banking.card.rest.mensageria;
+package com.ochiai.banking.card.rest.messaging;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,12 +7,12 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import com.ochiai.banking.core.persistence.service.MovimentacaoCartaoServico;
-import com.ochiai.banking.mensageria.model.TransacaoCartao;
-import com.ochiai.banking.mensageria.service.MensageriaServicoCartaoBase;
+import com.ochiai.banking.messaging.model.TransacaoCartao;
+import com.ochiai.banking.messaging.service.CartaoBaseMessagingService;
 
 @Service
-public class MensageriaServicoCartao extends MensageriaServicoCartaoBase {
-	Logger logger = LoggerFactory.getLogger(MensageriaServicoCartao.class);
+public class CartaoMessagingService extends CartaoBaseMessagingService {
+	Logger logger = LoggerFactory.getLogger(CartaoMessagingService.class);
 	
 	@Autowired 
 	MovimentacaoCartaoServico movimentacaoCartaoServico;
