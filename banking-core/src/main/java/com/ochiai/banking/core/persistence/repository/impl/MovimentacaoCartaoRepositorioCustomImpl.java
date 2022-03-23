@@ -22,6 +22,10 @@ import com.ochiai.banking.core.persistence.repository.TipoMovimentacaoCartaoRepo
 
 @Component
 public class MovimentacaoCartaoRepositorioCustomImpl implements MovimentacaoCartaoRepositorioCustom {
+	
+	private static final String CARTÃO_DUPLICADO = "Cartão duplicado";
+	private static final String CARTÃO_NÃO_ENCONTRADO = "Cartão não encontrado";	
+
 	@Autowired
 	private MovimentacaoCartaoRepositorio movimentacaoRepositorio;
 	
@@ -37,10 +41,10 @@ public class MovimentacaoCartaoRepositorioCustomImpl implements MovimentacaoCart
 		List<Cartao> cartoes = cartaoRepositorio.findByNumero(numeroCartao);
 		
 		if (cartoes == null || cartoes.isEmpty()) {
-			throw new Exception("Cartão não encontrado");
+			throw new Exception(CARTÃO_NÃO_ENCONTRADO);
 		}
 		if (cartoes.size() > 1) {
-			throw new Exception("Cartão duplicado");
+			throw new Exception(CARTÃO_DUPLICADO);
 		}
 		
 		Cartao cartao = cartoes.get(0);
@@ -62,10 +66,10 @@ public class MovimentacaoCartaoRepositorioCustomImpl implements MovimentacaoCart
 		List<Cartao> cartoes = cartaoRepositorio.findByNumero(numeroCartao);
 		
 		if (cartoes == null || cartoes.isEmpty()) {
-			throw new ContaNaoEncontradaException("Cartão não encontrado");
+			throw new ContaNaoEncontradaException(CARTÃO_NÃO_ENCONTRADO);
 		}
 		if (cartoes.size() > 1) {
-			throw new ContaDuplicadaException("Cartão duplicado");
+			throw new ContaDuplicadaException(CARTÃO_DUPLICADO);
 		}
 		
 		Cartao cartao = cartoes.get(0);
@@ -91,10 +95,10 @@ public class MovimentacaoCartaoRepositorioCustomImpl implements MovimentacaoCart
 		List<Cartao> cartoes = cartaoRepositorio.findByNumero(numeroCartao);
 		
 		if (cartoes == null || cartoes.isEmpty()) {
-			throw new ContaNaoEncontradaException("Cartão não encontrado");
+			throw new ContaNaoEncontradaException(CARTÃO_NÃO_ENCONTRADO);
 		}
 		if (cartoes.size() > 1) {
-			throw new ContaDuplicadaException("Cartão duplicado");
+			throw new ContaDuplicadaException(CARTÃO_DUPLICADO);
 		}
 		
 		Cartao cartao = cartoes.get(0);
