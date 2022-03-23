@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ochiai.banking.core.persistence.service.MovimentacaoCartaoServico;
 import com.ochiai.banking.messaging.model.TransacaoCartao;
 import com.ochiai.banking.messaging.service.CartaoBaseMessagingService;
+import com.ochiai.banking.messaging.service.MessagingConstants;
 
 @Service
 public class CartaoMessagingService extends CartaoBaseMessagingService {
@@ -18,7 +19,7 @@ public class CartaoMessagingService extends CartaoBaseMessagingService {
 	MovimentacaoCartaoServico movimentacaoCartaoServico;
 	
 	public void enviar(TransacaoCartao transacao) {
-		enviar(TOPICO_INVOCACAO_TRANSACAO_CARTAO, transacao.getIdentificadorCartao(), transacao);
+		enviar(MessagingConstants.TOPICO_INVOCACAO_TRANSACAO_CARTAO, transacao.getIdentificadorCartao(), transacao);
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class CartaoMessagingService extends CartaoBaseMessagingService {
 	}
 
 	@Override
-	@KafkaListener(topics = TOPICO_RETORNO_TRANSACAO_CARTAO, groupId = GRUPO_RETORNO_TRANSACAO_CARTAO,
+	@KafkaListener(topics = MessagingConstants.TOPICO_RETORNO_TRANSACAO_CARTAO, groupId = MessagingConstants.GRUPO_RETORNO_TRANSACAO_CARTAO,
 			containerFactory = "transacaoCartaoKafkaListenerContainerFactory")
 	protected void receber(TransacaoCartao transacao) {
 		if (transacao.getProcessada()) {

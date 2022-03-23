@@ -23,8 +23,8 @@ import com.ochiai.banking.core.persistence.repository.TipoMovimentacaoCartaoRepo
 @Component
 public class MovimentacaoCartaoRepositorioCustomImpl implements MovimentacaoCartaoRepositorioCustom {
 	
-	private static final String CARTÃO_DUPLICADO = "Cartão duplicado";
-	private static final String CARTÃO_NÃO_ENCONTRADO = "Cartão não encontrado";	
+	private static final String CARTAO_DUPLICADO = "Cartão duplicado";
+	private static final String CARTAO_NAO_ENCONTRADO = "Cartão não encontrado";	
 
 	@Autowired
 	private MovimentacaoCartaoRepositorio movimentacaoRepositorio;
@@ -41,10 +41,10 @@ public class MovimentacaoCartaoRepositorioCustomImpl implements MovimentacaoCart
 		List<Cartao> cartoes = cartaoRepositorio.findByNumero(numeroCartao);
 		
 		if (cartoes == null || cartoes.isEmpty()) {
-			throw new Exception(CARTÃO_NÃO_ENCONTRADO);
+			throw new Exception(CARTAO_NAO_ENCONTRADO);
 		}
 		if (cartoes.size() > 1) {
-			throw new Exception(CARTÃO_DUPLICADO);
+			throw new Exception(CARTAO_DUPLICADO);
 		}
 		
 		Cartao cartao = cartoes.get(0);
@@ -66,10 +66,10 @@ public class MovimentacaoCartaoRepositorioCustomImpl implements MovimentacaoCart
 		List<Cartao> cartoes = cartaoRepositorio.findByNumero(numeroCartao);
 		
 		if (cartoes == null || cartoes.isEmpty()) {
-			throw new ContaNaoEncontradaException(CARTÃO_NÃO_ENCONTRADO);
+			throw new ContaNaoEncontradaException(CARTAO_NAO_ENCONTRADO);
 		}
 		if (cartoes.size() > 1) {
-			throw new ContaDuplicadaException(CARTÃO_DUPLICADO);
+			throw new ContaDuplicadaException(CARTAO_DUPLICADO);
 		}
 		
 		Cartao cartao = cartoes.get(0);
@@ -95,10 +95,10 @@ public class MovimentacaoCartaoRepositorioCustomImpl implements MovimentacaoCart
 		List<Cartao> cartoes = cartaoRepositorio.findByNumero(numeroCartao);
 		
 		if (cartoes == null || cartoes.isEmpty()) {
-			throw new ContaNaoEncontradaException(CARTÃO_NÃO_ENCONTRADO);
+			throw new ContaNaoEncontradaException(CARTAO_NAO_ENCONTRADO);
 		}
 		if (cartoes.size() > 1) {
-			throw new ContaDuplicadaException(CARTÃO_DUPLICADO);
+			throw new ContaDuplicadaException(CARTAO_DUPLICADO);
 		}
 		
 		Cartao cartao = cartoes.get(0);

@@ -23,7 +23,7 @@ public abstract class CartaoBaseMessagingService implements MessagingService {
 		void erro(Throwable t);		
 	}
 
-	public CartaoBaseMessagingService() {
+	protected CartaoBaseMessagingService() {
 		
 	}
 

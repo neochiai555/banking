@@ -23,7 +23,7 @@ public abstract class ContaBaseMessagingService implements MessagingService {
 		void erro(Throwable t);		
 	}
 
-	public ContaBaseMessagingService() {
+	protected ContaBaseMessagingService() {
 		
 	}
 

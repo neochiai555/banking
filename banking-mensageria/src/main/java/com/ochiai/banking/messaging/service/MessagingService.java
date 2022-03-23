@@ -2,13 +2,4 @@ package com.ochiai.banking.messaging.service;
 
 public interface MessagingService {
 
-	String TOPICO_INVOCACAO_TRANSACAO_CARTAO = "banking_card_transaction_invocation";
-	String TOPICO_RETORNO_TRANSACAO_CARTAO = "banking_card_transaction_return";
-	String TOPICO_INVOCACAO_TRANSACAO_CONTA = "banking_account_transaction_invocation";
-	String TOPICO_RETORNO_TRANSACAO_CONTA = "banking_account_transaction_return";
-	String GRUPO_INVOCACAO_TRANSACAO_CARTAO = "banking_card_transaction_invocation_group";
-	String GRUPO_RETORNO_TRANSACAO_CARTAO = "banking_card_transaction_return_group";
-	String GRUPO_INVOCACAO_TRANSACAO_CONTA = "banking_account_transaction_invocation_group";
-	String GRUPO_RETORNO_TRANSACAO_CONTA = "banking_account_transaction_return_group";
-
 }
